@@ -1,10 +1,11 @@
 package bai17;
 
+
 public class Product {
-    private String name;
-    private String description;
-    private double price;
-    private int[] rate={1,2,3,4,5};
+    String name;
+    String description;
+    double price;
+    int[] rate = {1, 2, 3, 4, 5};
 
     public Product() {
     }
@@ -16,43 +17,44 @@ public class Product {
         this.rate = rate;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int[] getRate() {
-        return rate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRate(int[] rate) {
+        this.rate = rate;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setRate(int[] rate) {
-        this.rate = rate;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int[] getRate() {
+        return rate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     public void setPrice(double price) {
-        if ((price > 0) &&(price<=100)){
-            this.price=price;
-        }
+
+        this.price = price;
     }
-    public double getPrice(){
-        return price;
-    }
+
     public void viewInfo() {
         System.out.println("Ten: " + name);
         System.out.println("Gia: " + price);
-        System.out.println("Danh gia: " + rate);
+        System.out.println("Mo ta: " + description);
     }
-
-
 }
+
+
