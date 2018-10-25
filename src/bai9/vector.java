@@ -1,102 +1,94 @@
-package bai10;
+package bai9;
 
+import java.util.Scanner;
 
-public class DaThuc {
-    private int[] heSo;
-    private int bac;
+public class vector {
+    double hddau, hdcuoi, tddau, tdcuoi;
 
-    public DaThuc(int a, int b) {
-        heSo = new int[b + 1];
-        heSo[b] = a;
-        bac = degree();
+    public vector() {
     }
 
-    public DaThuc(DaThuc p) {
-        heSo = new int[p.heSo.length];
-        for (int i = 0; i < p.heSo.length; i++) {
-            heSo[i] = p.heSo[i];
+    public vector(double x1, double y1, double x2, double y2) {
+        this.hddau = x1;
+        this.tddau = y1;
+        this.hdcuoi = x2;
+        this.tdcuoi = y2;
+    }
+
+    public void isValues(vector h, vector g) {
+        if (((h.hdcuoi - h.hddau) == (g.hdcuoi - g.hddau) && ((h.tdcuoi - h.tddau) == (g.tdcuoi - g.tddau)))) {
+            System.out.println("Hai vecto bang nhau");
+
+        } else {
+            System.out.println("Khong bang nhau");
         }
-        bac = p.degree();
     }
 
-    public int degree() {
-        int d = 0;
-        for (int i = 0; i < heSo.length; i++) {
-            if (heSo[i] != 0) d = i;
-        }
-        return d;
+    public double nhapX() {
+        Scanner sc = new Scanner(System.in);
+        double x = sc.nextDouble();
+        return x;
     }
 
-    public DaThuc cong(DaThuc b) {
-        DaThuc a = this;
-        DaThuc c = new DaThuc(0, Math.max(a.bac, b.bac));
-        for (int i = 0; i <= a.bac; i++) c.heSo[i] += a.heSo[i];
-        for (int i = 0; i <= b.bac; i++) c.heSo[i] += b.heSo[i];
-        c.bac = c.degree();
-        return c;
+    public vector inputInfo() {
+        System.out.print("Phan hoanh do dau = ");
+        double x1 = nhapX();
+        System.out.print("Phan tung do dau = ");
+        double y1 = nhapX();
+        System.out.print("Phan hoanh do cuoi = ");
+        double x2 = nhapX();
+        System.out.print("Phan tung do cuoi = ");
+        double y2 = nhapX();
+        vector A = new vector(x1, y1, x2, y2);
+        return A;
     }
 
-    public DaThuc nhan(DaThuc b) {
-        DaThuc a = this;
-        DaThuc c = new DaThuc(0, a.bac + b.bac);
-        for (int i = 0; i <= a.bac; i++)
-            for (int j = 0; j <= b.bac; j++)
-                c.heSo[i + j] += (a.heSo[i] * b.heSo[j]);
-        c.bac = c.degree();
-        return c;
-    }
-
-    public int coeff() {
-        return coeff(degree());
+    public void vecto(vector g) {
+        double hd, td;
+        hd = g.hdcuoi - g.hddau;
+        td = g.tdcuoi - g.tddau;
+        System.out.println("Vector: (" + hd + "," + td + ")");
     }
 
 
-    // get the coefficient for degree d
-    public int coeff(int degree) {
-        if (degree > this.degree()) throw new RuntimeException("bad degree");
-        return heSo[degree];
+    public double khoangCach() {
+        return Math.sqrt((hdcuoi - hddau) * (hdcuoi - hddau) + (tdcuoi - tddau) * (tdcuoi - tddau));
     }
 
-    public String toString() {
-        if (bac == 0) return "" + heSo[0];
-        if (bac == 1) return heSo[1] + "x + " + heSo[0];
-        String s = heSo[bac] + "x^" + bac;
-        for (int i = bac - 1; i >= 0; i--) {
-            if (heSo[i] == 0) {
-                continue;
-            } else if (heSo[i] > 0) {
-                s = s + " + " + (heSo[i]);
-            } else if (heSo[i] < 0) s = s + " - " + (-heSo[i]);
-            if (i == 1) {
-                s = s + "x";
-            } else if (i > 1) s = s + "x^" + i;
-        }
-        return s;
+    public double goc2Vecto(vector g, vector h) {
+        double temp1 = (g.hdcuoi - g.hddau) * (h.tdcuoi - h.tddau) + (g.tdcuoi - g.tddau) * (h.hdcuoi - h.hddau);
+        return Math.acos(temp1 / (g.khoangCach() * h.khoangCach()));
+    }
+
+    public void congVecto(vector g, vector h) {
+        System.out.println("Tong 2 vecto: (" + ((g.hdcuoi - g.hddau) + (h.hdcuoi - h.hddau)) + "," + ((g.tdcuoi - g.tddau) + (h.tdcuoi - h.tddau)) + ")");
+    }
+
+    public void truVecto(vector g, vector h) {
+        System.out.println("Tong 2 vecto: (" + ((g.hdcuoi - g.hddau) - (h.hdcuoi - h.hddau)) + "," + ((g.tdcuoi - g.tddau) - (h.tdcuoi - h.tddau)) + ")");
+    }
+
+    public void nhanVecto(vector g, vector h) {
+        System.out.println("Tong 2 vecto: (" + ((g.hdcuoi - g.hddau) * (h.hdcuoi - h.hddau)) + "," + ((g.tdcuoi - g.tddau) * (h.tdcuoi - h.tddau)) + ")");
     }
 
     public static void main(String[] args) {
-        DaThuc zero = new DaThuc(0, 0);
 
-        DaThuc p1 = new DaThuc(1, 3);
-        DaThuc p2 = new DaThuc(2, 2);
-        DaThuc p3 = new DaThuc(4, 0);
-        DaThuc p4 = new DaThuc(0, 1);
-        DaThuc p = p1.cong(p2).cong(p3).cong(p4);   // 4x^3 + 3x^2 + 1
-
-        DaThuc q1 = new DaThuc(1, 1);
-        DaThuc q2 = new DaThuc(3, 0);
-        DaThuc q = q1.cong(q2);                     // 3x^2 + 5
-
-
-        DaThuc r = p.cong(q);
-        DaThuc s = p.nhan(q);
-
-        System.out.println("zero(x) =     " + zero);
-        System.out.println("p(x) =        " + p);
-        System.out.println("q(x) =        " + q);
-        System.out.println("p(x) + q(x) = " + r);
-        System.out.println("p(x) * q(x) = " + s);
-
+        vector A = new vector();
+        System.out.println("Nhap vector A : ");
+        A = A.inputInfo();
+        A.vecto(A);
+        vector B = new vector();
+        System.out.println("Nhap vector : ");
+        B = B.inputInfo();
+        B.vecto(B);
+        vector C = new vector();
+        C.isValues(A, B);
+        System.out.println("Goc cua 2 vec to la: " + C.goc2Vecto(A, B));
+        C.congVecto(A, B);
+        C.truVecto(A, B);
+        C.nhanVecto(A, B);
 
     }
 }
+
